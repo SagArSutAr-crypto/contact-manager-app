@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>Contacts</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+<style>
+.flexbox {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+}
+
+.flexbox-inner {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	margin-top: 10px;
+	padding-left: 20rem;
+	padding-right: 20rem;
+}
+
+.text-right {
+	text-align: right;
+}
+
+.text-center {
+	text-align: center;
+}
+
+.ml-400 {
+	margin-left: 400px;
+}
+</style>
+</head>
+
+<body class="container">
+	<div class="flexbox-inner">
+		<a class="text-right" th:href="@{/logout}">Logout</a>
+	</div>
+	<h4 class="text-center">Add Contacts</h4>
+	<div class="flexbox">
+		<form th:action="@{/contacts}" th:object="${contact}" method="post">
+			<div class="flexbox-inner">
+				<label>Name</label> <input type="text" class="form-control"
+					th:field="*{name}" />
+				<div class="alert alert-warning"
+					th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+			</div>
+			<div class="flexbox-inner">
+				<label>Ph no</label> <input type="text" class="form-control"
+					th:field="*{number}" />
+				<div class="alert alert-warning"
+					th:if="${#fields.hasErrors('number')}" th:errors="*{number}"></div>
+			</div>
+			<div class="flexbox-inner">
+				<label>Email</label> <input type="text" class="form-control"
+					th:field="*{email}" />
+				<div class="alert alert-warning"
+					th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+			</div>
+			<div class="flexbox-inner">
+				<button type="submit" class="ml-400 btn btn-primary">Save</button>
+			</div>
+		</form>
+	</div>
+	<div class="mt-5" th:switch="${contacts}">
+		<h2 th:case="null">No contacts</h2>
+		<div th:case="*">
+			<h4 class="text-center">My Contacts</h4>
+			<table class="table table-bordered table-striped">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Ph no</th>
+						<th>Email</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="contact : ${contacts}">
+						<td th:text="${contact.name}"></td>
+						<td th:text="${contact.number}"></td>
+						<td th:text="${contact.email}"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</body>
+</html>

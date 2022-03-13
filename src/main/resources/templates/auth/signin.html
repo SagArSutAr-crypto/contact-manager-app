@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>Sign in</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+
+<style>
+.flexbox {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+}
+
+.flexbox-inner {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	margin-top: 20px;
+	padding-left: 20rem;
+	padding-right: 20rem;
+}
+
+.text-right {
+	text-align: right;
+}
+
+.text-center {
+	text-align: center;
+}
+</style>
+</head>
+<body class="container">
+	<h2 class="text-center">Sign In</h2>
+	<div class="flexbox-inner text-center mt-5">
+		<span> Don't have an account? <a href="/signup">Sign Up</a></span>
+	</div>
+
+	<div class="flexbox">
+		<div class="flexbox-inner">
+			<!-- <span th:if="${InvalidCreds}" class="alert alert-danger">
+				Invalid email/password</span> -->
+			<div th:if="${param.error}" class="alert alert-danger">Invalid
+				username and password.</div>
+			<div th:if="${param.logout}" class="alert alert-danger">You
+				have been logged out.</div>
+			<div th:if="${param.nonAuth}" class="alert alert-danger">Please
+				login to enter contacts.</div>
+		</div>
+		<form th:action="@{/login}" th:object="${user}" method="post">
+			<div class="flexbox-inner">
+				<label>Email</label> <input type="text" class="form-control"
+					th:field="*{email}" />
+				<div class="alert alert-warning"
+					th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+			</div>
+			<div class="flexbox-inner">
+				<label>Password</label> <input type="password" class="form-control"
+					th:field="*{password}" />
+				<div class="alert alert-warning"
+					th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+			</div>
+			<div class="flexbox-inner text-right">
+				<a href="#">Forgot your password?</a>
+			</div>
+			<div class="flexbox-inner">
+				<button type="submit" class="btn btn-primary btn-block">
+					Sign In</button>
+			</div>
+		</form>
+	</div>
+</body>
+</html>
