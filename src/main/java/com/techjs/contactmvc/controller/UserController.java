@@ -53,7 +53,7 @@ public class UserController {
 		if (bindingResult.hasErrors())
 			return "auth/signin";
 
-		int validateUser = userService.validateUser(user);
+		int validateUser = userService.login(user);
 
 		if (validateUser == 200) {
 			ContactMvcApplication.isAuthenticated = true;
